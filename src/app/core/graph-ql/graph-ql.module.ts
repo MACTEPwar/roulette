@@ -1,8 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {
-  ApolloClientOptions, InMemoryCache, split
-} from '@apollo/client/core';
+import { ApolloClientOptions, InMemoryCache, split } from '@apollo/client/core';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -13,7 +11,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   // Create an http link:
   const http = httpLink.create({
     uri,
-    headers: getHeaders()
+    headers: getHeaders(),
   });
 
   // Create a WebSocket link:
@@ -21,6 +19,13 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     uri: `ws://valued-rhino-85.hasura.app/v1/graphql`,
     options: {
       reconnect: true,
+      connectionParams: {
+        headers: {
+          'x-hasura-admin-secret':
+            'sxy14YqatWgISVnWm6ujuJeRKODP2XhCjpUZelo0Dg22oVqd0Wn1CQnOc5AGhJeI',
+            'content-type': 'application/json'
+        },
+      },
     },
   });
 
@@ -37,7 +42,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   );
 
   return {
-    link: http,
+    link,
     cache: new InMemoryCache(),
   };
 }

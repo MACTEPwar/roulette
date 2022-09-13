@@ -1,6 +1,6 @@
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Apollo, gql } from 'apollo-angular';
 
@@ -10,39 +10,49 @@ export class UserService {
   users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
 
   constructor(private httpClient: HttpClient, private apollo: Apollo) {
-    apollo.watchQuery<any>({
-      query: gql`
-        query q1 {
-          Users {
+    apollo
+      .watchQuery<any>({
+        query: gql`
+          query q1 {
+            Users {
               Id
               Name
               Nicname
               gameId
+            }
           }
-        }
-      `
-    }).valueChanges.subscribe(res => console.log('res',res));
+        `,
+      })
+      .valueChanges.subscribe((res) => console.log('res', res));
   }
 
   public subscribeToUsers$(): Observable<any> {
     // return of();
     const USERS_SUBSCRIPTION = gql`
-        subscription s1 {
-            Users {
-                Id
-                Name
-                Nicname
-                gameId
-            }
+      subscription s1 {
+        Users {
+          Id
+          Name
+          Nicname
+          gameId
         }
+      }
     `;
 
     return this.apollo.subscribe({
       query: USERS_SUBSCRIPTION,
-      context: {
-        headers: this.getHeaders()
-      }
-    })
+    }).pipe(tap((res:any) => {
+      const users = res?.data?.Users?.map((m: any) => {
+        return {
+          gameId: m.gameId,
+          name: m.Name,
+          id: m.Id,
+          nicname: m.Nicname,
+        } as User;
+      });
+
+      this.users$.next(users);
+    })) 
   }
 
   public getAllUsers(): void {

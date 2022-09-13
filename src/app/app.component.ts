@@ -23,7 +23,7 @@ export class AppComponent {
 
   constructor(private userService: UserService) {
     this.users$ = userService.users$;
-    this.userService.getAllUsers();
+    // this.userService.getAllUsers();
 
     this.userService.subscribeToUsers$().subscribe((res) => console.log(res));
   }
