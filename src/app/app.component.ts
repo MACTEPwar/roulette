@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [UserService]
+  providers: [UserService],
 })
 export class AppComponent {
   title = 'roulette';
@@ -19,11 +19,13 @@ export class AppComponent {
     name: new FormControl('', Validators.required),
     nicname: new FormControl('', Validators.required),
     gameId: new FormControl('', Validators.required),
-  })
+  });
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserService) {
     this.users$ = userService.users$;
     this.userService.getAllUsers();
+
+    this.userService.subscribeToUsers$().subscribe((res) => console.log(res));
   }
 
   openModalForAddesUser(): void {
@@ -36,11 +38,11 @@ export class AppComponent {
   }
 
   deleteUser(user: User): void {
-    const pass = prompt("Введiть пароль");
-    if (pass === '123qweASD!@#'){
+    const pass = prompt('Введiть пароль');
+    if (pass === '123qweASD!@#') {
       this.userService.deleteUser(user.id);
     } else {
-      alert('Пароль не вiрний')
+      alert('Пароль не вiрний');
     }
   }
 }

@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GraphQLModule } from './core/graph-ql/graph-ql.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     InputTextModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent],

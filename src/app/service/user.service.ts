@@ -1,14 +1,49 @@
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()
 export class UserService {
   url: string = 'https://valued-rhino-85.hasura.app/v1/graphql';
   users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private apollo: Apollo) {
+    apollo.watchQuery<any>({
+      query: gql`
+        query q1 {
+          Users {
+              Id
+              Name
+              Nicname
+              gameId
+          }
+        }
+      `
+    }).valueChanges.subscribe(res => console.log('res',res));
+  }
+
+  public subscribeToUsers$(): Observable<any> {
+    // return of();
+    const USERS_SUBSCRIPTION = gql`
+        subscription s1 {
+            Users {
+                Id
+                Name
+                Nicname
+                gameId
+            }
+        }
+    `;
+
+    return this.apollo.subscribe({
+      query: USERS_SUBSCRIPTION,
+      context: {
+        headers: this.getHeaders()
+      }
+    })
+  }
 
   public getAllUsers(): void {
     const query: string = `
