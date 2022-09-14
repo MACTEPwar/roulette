@@ -1,0 +1,16 @@
+:host {
+  max-height: 100%;
+  display: block;
+  overflow-y: auto;
+}
+
+.container {
+  height: calc(100vh - 50px);
+  .toolbar {
+    height: 63px;
+  }
+  p-table {
+    height: calc(100% - 63px);
+    display: block;
+  }
+}

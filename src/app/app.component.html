@@ -1,87 +1,13 @@
-<p-table [value]="(users$ | async)!" responsiveLayout="scroll">
-  <ng-template pTemplate="caption">
-    <button
-      pButton
-      label="Додати"
-      type="button"
-      icon="pi pi-plus"
-      iconPos="left"
-      (click)="openModalForAddesUser()"
-    ></button>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Iм`я</th>
-      <th>Нiк</th>
-      <th>Iгровий id</th>
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-user>
-    <tr>
-      <td>{{ user.name }}</td>
-      <td>{{ user.nicname }}</td>
-      <td>{{ user.gameId }}</td>
-      <td>
-        <button
-          pButton
-          class="bg-red-400"
-          label="Видалити"
-          type="button"
-          icon="pi pi-trash"
-          iconPos="left"
-          (click)="deleteUser(user)"
-        ></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-
-<p-dialog header="Додавання користувача" [(visible)]="visibleModalForAddesUser">
-  <div class="card" [formGroup]="profileForm">
-    <div class="field">
-      <label for="name" class="block">Iм`я</label>
-      <input
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        id="name"
-        aria-describedby="name-help"
-        pInputText
-        formControlName="name"
-      />
-    </div>
-    <div class="field">
-      <label for="nicname" class="block">Нiк</label>
-      <input
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        id="nicname"
-        aria-describedby="nicname-help"
-        pInputText
-        formControlName="nicname"
-      />
-    </div>
-    <div class="field">
-      <label for="gameId" class="block">Iгровий id</label>
-      <input
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        id="gameId"
-        aria-describedby="gameId-help"
-        pInputText
-        formControlName="gameId"
-      />
-    </div>
+<nav>
+  <div class="nav-item">
+    <i class="pi pi-user"></i>
+    <a [routerLink]="['users']">Люди</a>
   </div>
-  <p-footer>
-    <button
-      pButton
-      label="Додати"
-      type="button"
-      class="w-full"
-      icon="pi pi-check"
-      iconPos="left"
-      (click)="addUser()"
-      [disabled]="profileForm.invalid"
-    ></button>
-  </p-footer>
-</p-dialog>
-
-<router-outlet></router-outlet>
+  <div class="nav-item">
+    <i class="pi pi-users"></i>
+    <a [routerLink]="['teams']">Команди</a>
+  </div>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+</main>

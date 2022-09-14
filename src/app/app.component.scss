@@ -1,0 +1,19 @@
+nav {
+    height: 50px;
+    background-color: rgb(71, 71, 71);
+    width: 100%;
+    display: flex;
+    .nav-item{
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 0.5rem;
+        color: rgb(230, 230, 230);
+        a {
+            margin-left: 4px;
+            color: rgb(230, 230, 230);
+        }
+    }
+}
+main {
+    height: calc(100vh - 50px);
+}

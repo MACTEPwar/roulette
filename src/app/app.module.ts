@@ -12,9 +12,12 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphQLModule } from './core/graph-ql/graph-ql.module';
+import { UsersComponent } from './views/users/users.component';
+import { UserService } from './service/user.service';
+import { TeamsComponent } from './views/teams/teams.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UsersComponent, TeamsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +31,7 @@ import { GraphQLModule } from './core/graph-ql/graph-ql.module';
     ReactiveFormsModule,
     GraphQLModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
