@@ -15,6 +15,7 @@ import { GraphQLModule } from './core/graph-ql/graph-ql.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './service/user.service';
 import { TeamsComponent } from './views/teams/teams.component';
+import { TeamService } from './service/team.service';
 
 @NgModule({
   declarations: [AppComponent, UsersComponent, TeamsComponent],
@@ -29,9 +30,9 @@ import { TeamsComponent } from './views/teams/teams.component';
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
-    GraphQLModule
+    GraphQLModule,
   ],
-  providers: [UserService],
+  providers: [UserService, TeamService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

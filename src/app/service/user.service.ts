@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
@@ -6,7 +7,6 @@ import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()
 export class UserService {
-  url: string = 'https://valued-rhino-85.hasura.app/v1/graphql';
   users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
 
   constructor(private httpClient: HttpClient, private apollo: Apollo) {
@@ -68,7 +68,7 @@ export class UserService {
     `;
 
     this.httpClient
-      .post(this.url, { query }, { headers: this.getHeaders() })
+      .post(environment.apiUrl, { query }, { headers: this.getHeaders() })
       .subscribe((res: any) => {
         const users = res?.data?.Users?.map((m: any) => {
           return {
@@ -93,7 +93,7 @@ export class UserService {
     `;
 
     this.httpClient
-      .post(this.url, { query: mutation }, { headers: this.getHeaders() })
+      .post(environment.apiUrl, { query: mutation }, { headers: this.getHeaders() })
       .subscribe((res: any) => {
         this.getAllUsers();
       });
@@ -109,7 +109,7 @@ export class UserService {
     `;
 
     this.httpClient
-      .post(this.url, { query: mutation }, { headers: this.getHeaders() })
+      .post(environment.apiUrl, { query: mutation }, { headers: this.getHeaders() })
       .subscribe((res: any) => {
         this.getAllUsers();
       });
