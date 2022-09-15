@@ -16,6 +16,9 @@ import { UsersComponent } from './views/users/users.component';
 import { UserService } from './service/user.service';
 import { TeamsComponent } from './views/teams/teams.component';
 import { TeamService } from './service/team.service';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [AppComponent, UsersComponent, TeamsComponent],
@@ -31,6 +34,9 @@ import { TeamService } from './service/team.service';
     FormsModule,
     ReactiveFormsModule,
     GraphQLModule,
+    InputNumberModule,
+    CheckboxModule,
+    DropdownModule
   ],
   providers: [UserService, TeamService],
   bootstrap: [AppComponent],

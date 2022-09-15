@@ -13,7 +13,6 @@ export class TeamsComponent implements OnInit {
 
   constructor(private teamService: TeamService) {
     this.teams$ = teamService.teams$;
-    this.teamService.subscribeToTeams$().subscribe();
   }
 
   ngOnInit(): void {

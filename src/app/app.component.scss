@@ -16,4 +16,8 @@ nav {
 }
 main {
     height: calc(100vh - 50px);
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    left: 0;
 }

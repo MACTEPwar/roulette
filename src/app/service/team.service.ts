@@ -7,7 +7,9 @@ import { Team } from '../models/team';
 export class TeamService {
   teams$: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo) {
+    this.subscribeToTeams$().subscribe();
+  }
 
   public subscribeToTeams$(): Observable<any> {
     const TEAMS_SUBSCRIPTION = gql`

@@ -17,7 +17,7 @@
         type="button"
         icon="pi pi-plus"
         iconPos="left"
-        (click)="showModalForAddTeam()"
+        (click)="openModalForAddTeam()"
       ></button>
     </div>
   </div>
@@ -109,3 +109,66 @@
     </p-footer>
   </p-dialog>
 </div>
+
+<p-dialog
+  [modal]="true"
+  header="Формування команди"
+  [(visible)]="visibleModalForGenerateTeam"
+>
+  <div class="card" [formGroup]="teamForm">
+    <div class="field">
+      <label for="teamId" class="block">Команда</label>
+      <p-dropdown
+        [options]="(teams$ | async)!"
+        placeholder="Створиться нова"
+        optionLabel="name"
+        optionValue="id"
+        formControlName="teamId"
+        [showClear]="true"
+      ></p-dropdown>
+    </div>
+    <div class="field">
+      <label for="teamName" class="block">Назва команди</label>
+      <input
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        id="teamName"
+        aria-describedby="teamName-help"
+        pInputText
+        formControlName="teamName"
+      />
+    </div>
+    <div class="field">
+      <label for="usersCount">Кiлькiсть гравцiв</label>
+      <p-inputNumber
+        formControlName="usersCount"
+        mode="decimal"
+        [showButtons]="true"
+        inputId="usersCount"
+        [min]="1"
+        [max]="10"
+      >
+      </p-inputNumber>
+    </div>
+    <div class="field">
+      <p-checkbox
+        [binary]="true"
+        name="group1"
+        formControlName="deleteUsers"
+        inputId="deleteUsers"
+      ></p-checkbox>
+      <label for="deleteUsers">Видалити поточних гравцiв?</label>
+    </div>
+  </div>
+  <p-footer>
+    <button
+      pButton
+      label="Сформувати"
+      type="button"
+      class="w-full"
+      icon="pi pi-check"
+      iconPos="left"
+      (click)="addUser()"
+      [disabled]="profileForm.invalid"
+    ></button>
+  </p-footer>
+</p-dialog>

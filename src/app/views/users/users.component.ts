@@ -1,3 +1,4 @@
+import { TeamService } from 'src/app/service/team.service';
 import { Subscription } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -5,6 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/user.service';
 import { EmptyObject } from 'apollo-angular/types';
+import { Team } from 'src/app/models/team';
 
 @Component({
   selector: 'app-users',
@@ -13,7 +15,9 @@ import { EmptyObject } from 'apollo-angular/types';
 })
 export class UsersComponent implements OnInit {
   users$: Observable<Array<User>>;
+  teams$: Observable<Array<Team>>;
   visibleModalForAddesUser = false;
+  visibleModalForGenerateTeam = false;
 
   profileForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -21,11 +25,24 @@ export class UsersComponent implements OnInit {
     gameId: new FormControl('', Validators.required),
   });
 
+  teamForm: FormGroup = new FormGroup({
+    teamId: new FormControl(null),
+    teamName: new FormControl(null),
+    usersCount: new FormControl(5, Validators.required),
+    deleteUsers: new FormControl(false),
+  });
+
   subscription: any;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private teamService: TeamService
+  ) {
     this.users$ = userService.users$;
-    this.subscription = this.userService.subscribeToUsers$().subscribe();
+    this.teams$ = this.teamService.teams$;
+    this.subscription = this.userService
+      .subscribeToUsers$()
+      .subscribe();
   }
 
   ngOnInit(): void {}
@@ -52,7 +69,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  showModalForAddTeam(): void {
-    
+  openModalForAddTeam(): void {
+    this.visibleModalForGenerateTeam = true;
   }
 }

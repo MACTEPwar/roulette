@@ -5,6 +5,7 @@
 }
 
 .container {
+  position: relative;
   height: calc(100vh - 50px);
   .toolbar {
     height: 63px;
