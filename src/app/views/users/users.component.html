@@ -125,9 +125,10 @@
         optionValue="id"
         formControlName="teamId"
         [showClear]="true"
+        styleClass="w-full"
       ></p-dropdown>
     </div>
-    <div class="field">
+    <div class="field" *ngIf="teamForm.get('teamId')!.value === null">
       <label for="teamName" class="block">Назва команди</label>
       <input
         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
@@ -149,7 +150,7 @@
       >
       </p-inputNumber>
     </div>
-    <div class="field">
+    <div class="field" *ngIf="teamForm.get('teamId')!.value !== null">
       <p-checkbox
         [binary]="true"
         name="group1"
