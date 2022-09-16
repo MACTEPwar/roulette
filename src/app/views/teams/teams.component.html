@@ -1,26 +1,26 @@
 <div class="container">
   <div class="grid grid-nogutter ">
-    <div class="col-4 m-2" *ngFor="let team of teams$ | async">
+    <div class="col-4 p-2" *ngFor="let team of teams$ | async">
       <div
         class="card overflow-hidden border-round bg-indigo-400 text-white card-container"
       >
         <div
           class="grid grid-nogutter border-round-top bg-indigo-600 border-bottom-2 border-indigo-200"
         >
-          <div class="col font-bold">Команда: "{{ team.name }}"</div>
-          <div class="col-auto ml-auto mr-1 align-items-center flex">
+          <div class="col p-2 font-bold">Команда: "{{ team.name }}"</div>
+          <div class="col-auto p-2 ml-auto mr-1 align-items-center flex">
             <i class="cursor-pointer transition-colors transition-duration-300 hover:text-red-500 pi pi-trash"></i>
           </div>
         </div>
         <div class="grid grid-nogutter hover:bg-indigo-500" *ngFor="let user of team.users">
-          <div class="col">{{ user.nicname }}</div>
-          <div class="col">{{ user.gameId }}</div>
-          <div class="col-auto flex align-items-center mr-1">
+          <div class="col p-2">{{ user.nicname }}</div>
+          <div class="col p-2">{{ user.gameId }}</div>
+          <div class="col-auto p-2 flex align-items-center mr-1">
             <i class="cursor-pointer transition-colors transition-duration-300 hover:text-red-500 pi pi-times"></i>
           </div>
         </div>
         <div class="grid grid-nogutter" *ngIf="team.users.length === 0">
-          <div class="col">Команда порожня</div>
+          <div class="col p-2">Команда порожня</div>
         </div>
       </div>
     </div>
