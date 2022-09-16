@@ -40,9 +40,7 @@ export class UsersComponent implements OnInit {
   ) {
     this.users$ = userService.users$;
     this.teams$ = this.teamService.teams$;
-    this.subscription = this.userService
-      .subscribeToUsers$()
-      .subscribe();
+    this.subscription = this.userService.subscribeToUsers$().subscribe();
   }
 
   ngOnInit(): void {}
@@ -71,5 +69,16 @@ export class UsersComponent implements OnInit {
 
   openModalForAddTeam(): void {
     this.visibleModalForGenerateTeam = true;
+  }
+
+  generateTeam(): void {
+    const form = this.teamForm.getRawValue();
+    this.teamService.generateTeam(this.userService.users$.getValue(), {
+      teamId: +form.teamId,
+      teamName: form.teamName,
+      deleteUsers: form.deleteUsers,
+      usersCount: form.usersCount,
+    });
+    this.visibleModalForGenerateTeam = false;
   }
 }
