@@ -16,7 +16,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
 
   // Create a WebSocket link:
   const ws = new WebSocketLink({
-    uri: `ws://valued-rhino-85.hasura.app/v1/graphql`,
+    uri: `wss://valued-rhino-85.hasura.app/v1/graphql`,
     options: {
       reconnect: true,
       connectionParams: {
