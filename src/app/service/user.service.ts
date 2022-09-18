@@ -10,20 +10,20 @@ export class UserService {
   users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
 
   constructor(private httpClient: HttpClient, private apollo: Apollo) {
-    apollo
-      .watchQuery<any>({
-        query: gql`
-          query q1 {
-            Users {
-              Id
-              Name
-              Nicname
-              gameId
-            }
-          }
-        `,
-      })
-      .valueChanges.subscribe((res) => console.log('res', res));
+    // apollo
+    //   .watchQuery<any>({
+    //     query: gql`
+    //       query q1 {
+    //         Users {
+    //           Id
+    //           Name
+    //           Nicname
+    //           gameId
+    //         }
+    //       }
+    //     `,
+    //   })
+    //   .valueChanges.subscribe((res) => console.log('res', res));
   }
 
   public subscribeToUsers$(): Observable<any> {

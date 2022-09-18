@@ -7,6 +7,19 @@
     <i class="pi pi-users"></i>
     <a [routerLink]="['teams']">Команди</a>
   </div>
+  <div class="nav-item ml-auto">
+    <i class="pi pi-users"></i>
+
+    <ng-container
+      *ngIf="authorizeService.isAuthenticated$ | async; else loggedOut"
+    >
+      <a (click)="authorizeService.logout()"> Вийти </a>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <a (click)="login()">Увiйти</a>
+    </ng-template>
+  </div>
 </nav>
 <main>
   <router-outlet></router-outlet>

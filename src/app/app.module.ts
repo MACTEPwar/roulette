@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TableModule } from 'primeng/table';
@@ -19,6 +19,8 @@ import { TeamService } from './service/team.service';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { AuthorizeService } from './service/authORIZE.service';
 
 @NgModule({
   declarations: [AppComponent, UsersComponent, TeamsComponent],
@@ -36,9 +38,38 @@ import { DropdownModule } from 'primeng/dropdown';
     GraphQLModule,
     InputNumberModule,
     CheckboxModule,
-    DropdownModule
+    DropdownModule,
+    AuthModule.forRoot({
+      domain: 'dev-ob-i3qc4.us.auth0.com',
+      clientId: 'q3krDNW3sr1Plo5rcLrMqsdRJVTvuJPG',
+      audience: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/',
+      scope: 'read:current_user read:roles read:role_members read:users',
+
+      // Specify configuration for the interceptor
+      httpInterceptor: {
+        allowedList: [
+          {
+            // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
+            uri: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/*',
+            tokenOptions: {
+              // The attached token should target this audience
+              audience: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/',
+
+              // The attached token should have these scopes
+              scope:
+                'read:current_user read:roles read:role_members read:users',
+            },
+          },
+        ],
+      },
+    }),
   ],
-  providers: [UserService, TeamService],
+  providers: [
+    UserService,
+    TeamService,
+    AuthorizeService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
