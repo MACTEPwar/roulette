@@ -1,6 +1,7 @@
-export interface User {
-    id: number;
+export interface IUser {
+    id?: number;
     name: string;
-    nicname: string;
-    gameId: string;
+    nickname: string;
+    serverId: string;
+    serverSubId: string;
 }

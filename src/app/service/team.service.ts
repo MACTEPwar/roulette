@@ -11,7 +11,7 @@ import {
   EMPTY,
 } from 'rxjs';
 import { Team } from '../models/team';
-import { User } from '../models/user';
+import { IUser } from '../models/user';
 import { switchMap, take } from 'rxjs/operators';
 
 @Injectable()
@@ -32,8 +32,8 @@ export class TeamService {
             User {
               Name
               Id
-              Nicname
-              gameId
+              Nickname
+              ServerId
             }
           }
         }
@@ -51,10 +51,10 @@ export class TeamService {
               id: m.id,
               name: m.name,
               users: m.UsersTeamLinks.map((mu: any) => ({
-                gameId: mu.User.gameId,
+                serverId: mu.User.ServerId,
                 name: mu.User.Name,
                 id: mu.User.Id,
-                nicname: mu.User.Nicname,
+                nickname: mu.User.Nickname,
               })),
             } as Team;
           });
@@ -65,7 +65,7 @@ export class TeamService {
   }
 
   generateTeam(
-    users: User[],
+    users: IUser[],
     model: {
       teamId: number;
       teamName: string;
@@ -79,13 +79,13 @@ export class TeamService {
       //this create new team
       this.createTeam$(
         model.teamName,
-        users.map((m) => m.id)
+        users.map((m) => m.id!)
       ).subscribe();
     } else {
       //this update team
       this.addUsersToTeam$(
         model.teamId,
-        users.map((m) => m.id),
+        users.map((m) => m.id!),
         model.deleteUsers
       ).subscribe(console.log);
     }
@@ -174,7 +174,7 @@ export class TeamService {
     });
   }
 
-  getRandomUsers(users: User[], count: number): User[] {
+  getRandomUsers(users: IUser[], count: number): IUser[] {
     var result = new Array(count),
       len = users.length,
       taken = new Array(len);

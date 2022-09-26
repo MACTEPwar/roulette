@@ -34,6 +34,7 @@
         <th>Iм`я</th>
         <th>Нiк</th>
         <th>Iгровий id</th>
+        <th>Iгровий дод id</th>
         <th></th>
       </tr>
     </ng-template>
@@ -41,8 +42,9 @@
       <tr>
         <td>{{ ind + 1 }}</td>
         <td>{{ user.name }}</td>
-        <td>{{ user.nicname }}</td>
-        <td>{{ user.gameId }}</td>
+        <td>{{ user.nickname }}</td>
+        <td>{{ user.serverId }}</td>
+        <td>{{ user.serverSubId }}</td>
         <td>
           <button
             pButton
@@ -75,23 +77,23 @@
         />
       </div>
       <div class="field">
-        <label for="nicname" class="block">Нiк</label>
+        <label for="nickname" class="block">Нiк</label>
         <input
           class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          id="nicname"
-          aria-describedby="nicname-help"
+          id="nickname"
+          aria-describedby="nickname-help"
           pInputText
-          formControlName="nicname"
+          formControlName="nickname"
         />
       </div>
       <div class="field">
-        <label for="gameId" class="block">Iгровий id</label>
+        <label for="serverId" class="block">Iгровий id</label>
         <input
           class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          id="gameId"
-          aria-describedby="gameId-help"
+          id="serverId"
+          aria-describedby="serverId-help"
           pInputText
-          formControlName="gameId"
+          formControlName="serverId"
         />
       </div>
     </div>

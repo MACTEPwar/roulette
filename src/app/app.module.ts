@@ -22,6 +22,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { AuthorizeService } from './service/authORIZE.service';
 
+const auth0Domain = 'dev-ob-i3qc4.us.auth0.com';
+const auth0CleintId = 'q3krDNW3sr1Plo5rcLrMqsdRJVTvuJPG';
+const auth0Audience = 'hasura-api'
+
+const hasuraUri = 'https://valued-rhino-85.hasura.app/v1/graphql'
+
 @NgModule({
   declarations: [AppComponent, UsersComponent, TeamsComponent],
   imports: [
@@ -46,29 +52,29 @@ import { AuthorizeService } from './service/authORIZE.service';
       scope: 'read:current_user read:roles read:role_members read:users',
 
       // Specify configuration for the interceptor
-      httpInterceptor: {
-        allowedList: [
-          {
-            // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-            uri: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/*',
-            tokenOptions: {
-              // The attached token should target this audience
-              audience: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/',
+      // httpInterceptor: {
+      //   allowedList: [
+      //     {
+      //       // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
+      //       uri: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/*',
+      //       tokenOptions: {
+      //         // The attached token should target this audience
+      //         audience: 'https://dev-ob-i3qc4.us.auth0.com/api/v2/',
 
-              // The attached token should have these scopes
-              scope:
-                'read:current_user read:roles read:role_members read:users',
-            },
-          },
-        ],
-      },
+      //         // The attached token should have these scopes
+      //         scope:
+      //           'read:current_user read:roles read:role_members read:users',
+      //       },
+      //     },
+      //   ],
+      // },
     }),
   ],
   providers: [
     UserService,
     TeamService,
     AuthorizeService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

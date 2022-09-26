@@ -3,7 +3,7 @@ import { Subscription } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { IUser } from 'src/app/models/user';
 import { UserService } from 'src/app/service/user.service';
 import { EmptyObject } from 'apollo-angular/types';
 import { Team } from 'src/app/models/team';
@@ -14,15 +14,15 @@ import { Team } from 'src/app/models/team';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  users$: Observable<Array<User>>;
+  users$: Observable<Array<IUser>>;
   teams$: Observable<Array<Team>>;
   visibleModalForAddesUser = false;
   visibleModalForGenerateTeam = false;
 
   profileForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    nicname: new FormControl('', Validators.required),
-    gameId: new FormControl('', Validators.required),
+    nickname: new FormControl('', Validators.required),
+    serverId: new FormControl('', Validators.required),
   });
 
   teamForm: FormGroup = new FormGroup({
@@ -58,10 +58,10 @@ export class UsersComponent implements OnInit {
     this.visibleModalForAddesUser = false;
   }
 
-  deleteUser(user: User): void {
+  deleteUser(user: IUser): void {
     const pass = prompt('Введiть пароль');
     if (pass === '123qweASD!@#') {
-      this.userService.deleteUser(user.id);
+      this.userService.deleteUser(user.id!);
     } else {
       alert('Пароль не вiрний');
     }

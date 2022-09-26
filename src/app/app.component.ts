@@ -1,7 +1,7 @@
 import { UserService } from './service/user.service';
 import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './models/user';
+import { IUser } from './models/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';

@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment';
-import { User } from './../models/user';
+import { IUser } from './../models/user';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,7 +7,7 @@ import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()
 export class UserService {
-  users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
+  users$: BehaviorSubject<Array<IUser>> = new BehaviorSubject<Array<IUser>>([]);
 
   constructor(private httpClient: HttpClient, private apollo: Apollo) {
     // apollo
@@ -33,26 +33,30 @@ export class UserService {
         Users {
           Id
           Name
-          Nicname
-          gameId
+          Nickname
+          ServerId
         }
       }
     `;
 
-    return this.apollo.subscribe({
-      query: USERS_SUBSCRIPTION,
-    }).pipe(tap((res:any) => {
-      const users = res?.data?.Users?.map((m: any) => {
-        return {
-          gameId: m.gameId,
-          name: m.Name,
-          id: m.Id,
-          nicname: m.Nicname,
-        } as User;
-      });
+    return this.apollo
+      .subscribe({
+        query: USERS_SUBSCRIPTION,
+      })
+      .pipe(
+        tap((res: any) => {
+          const users = res?.data?.Users?.map((m: any) => {
+            return {
+              serverId: m.ServerId,
+              name: m.Name,
+              id: m.Id,
+              nickname: m.Nickname,
+            } as IUser;
+          });
 
-      this.users$.next(users);
-    })) 
+          this.users$.next(users);
+        })
+      );
   }
 
   public getAllUsers(): void {
@@ -61,8 +65,8 @@ export class UserService {
             Users {
                 Id
                 Name
-                Nicname
-                gameId
+                Nickname
+                ServerId
             }
         }
     `;
@@ -72,28 +76,32 @@ export class UserService {
       .subscribe((res: any) => {
         const users = res?.data?.Users?.map((m: any) => {
           return {
-            gameId: m.gameId,
+            serverId: m.ServerId,
             name: m.Name,
             id: m.Id,
-            nicname: m.Nicname,
-          } as User;
+            nickname: m.Nickname,
+          } as IUser;
         });
 
         this.users$.next(users);
       });
   }
 
-  public addUser(user: User): void {
+  public addUser(user: IUser): void {
     const mutation: string = `
         mutation m1 {
-            insert_Users_one(object: {Name: "${user.name}", Nicname: "${user.nicname}", gameId: "${user.gameId}"}) {
+            insert_Users_one(object: {Name: "${user.name}", Nickname: "${user.nickname}", ServerId: "${user.serverId}"}) {
                 Id
             }
         }
     `;
 
     this.httpClient
-      .post(environment.apiUrl, { query: mutation }, { headers: this.getHeaders() })
+      .post(
+        environment.apiUrl,
+        { query: mutation },
+        { headers: this.getHeaders() }
+      )
       .subscribe((res: any) => {
         this.getAllUsers();
       });
@@ -109,10 +117,18 @@ export class UserService {
     `;
 
     this.httpClient
-      .post(environment.apiUrl, { query: mutation }, { headers: this.getHeaders() })
+      .post(
+        environment.apiUrl,
+        { query: mutation },
+        { headers: this.getHeaders() }
+      )
       .subscribe((res: any) => {
         this.getAllUsers();
       });
+  }
+
+  public registerUser(): Observable<any> {
+    return of();
   }
 
   private getHeaders(): HttpHeaders {
